@@ -6,19 +6,26 @@ public class GenericPowerUp : MonoBehaviour {
 	public bool spinPowerUp = true;
 	public float rotationSpeed = 45.0f;
 
-	private Renderer renderer;
+	public int powerUpDuration = 10;
+
+	public Material powerUpMaterial;
 
 	[HideInInspector] // Hides var below
-	public Shader shader2;
+	public Renderer rend;
 	[HideInInspector] // Hides var below
-	public Shader shader1;
+	public Material currentMaterial;
+	[HideInInspector] // Hides var below
+	public Shader currentShader;
+	[HideInInspector] // Hides var below
+	public Shader powerUpShader;
 
 
 	public void SuperStart(){
-		renderer = GetComponent<Renderer>();
+		rend = GetComponent<Renderer>();
 		StartCoroutine(SpinPowerUp());
-		shader1 = Shader.Find("Toon/Basic");
-		shader2 = Shader.Find("Toon/Basic Outline");
+		currentShader = rend.material.shader;
+		powerUpShader = Shader.Find("Toon/Basic Outline");
+		currentMaterial = rend.material;
 	}
 	// Use this for initialization
 	public virtual void Start () {
@@ -37,12 +44,16 @@ public class GenericPowerUp : MonoBehaviour {
 		}
 	}
 
-	void OnTriggerEnter(Collider other) {
+	public virtual IEnumerator changeBackMaterial(int afterSeconds){
+		yield return new WaitForSeconds(afterSeconds);
+		rend.material = currentMaterial;
+ 	}
+
+	public virtual void OnTriggerEnter(Collider other) {
 		//has picked up
 		if (other.gameObject.tag.Equals("Player"))
-			if (renderer.material.shader == shader1)
-				renderer.material.shader = shader2;
-			else
-				renderer.material.shader = shader1;
+		{
+			Debug.Log ("Generic OnTriggerEnter() fired!");
+		}
 	}
 }
