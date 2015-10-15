@@ -6,7 +6,7 @@ public class GenericPowerUp : MonoBehaviour {
 	public bool spinPowerUp = true;
 	public float rotationSpeed = 45.0f;
 
-	public int powerUpDuration = 10;
+	public float powerUpDuration = 10;
 
 	public Material powerUpMaterial;
 

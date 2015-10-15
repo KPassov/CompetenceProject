@@ -19,7 +19,12 @@ public class InvisibilityPowerUp : GenericPowerUp {
 	void OnTriggerEnter(Collider other) {
 		base.OnTriggerEnter(other);
 		if(other.gameObject.tag == "Player"){
-			//other.gameObject.GetComponent<PlayerControl>().;
+
+			Hashtable payload  = new Hashtable();
+			payload.Add("material", powerUpMaterial);
+			payload.Add("duration", powerUpDuration);
+
+			NotificationCenter.DefaultCenter.PostNotification(this, "InvisiblityTriggered",payload);
 		}
 	}
 	#pragma warning restore 0114
