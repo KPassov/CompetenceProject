@@ -10,7 +10,7 @@ public class PlayerActions : MonoBehaviour {
 	void Start () {
 		rend = gameObject.GetComponent<Renderer>();
 		currentMaterial = rend.material ;
-		NotificationCenter.DefaultCenter.AddObserver(this, "InvisiblityTriggered");
+		NotificationCenter.DefaultCenter.AddObserver(this, "InvisibilityTriggered");
 	}
 	
 	// Update is called once per frame
@@ -18,7 +18,7 @@ public class PlayerActions : MonoBehaviour {
 		
 	}
 
-	void InvisiblityTriggered(NotificationCenter.Notification notif){
+	void InvisibilityTriggered(NotificationCenter.Notification notif){
 		Hashtable payload = notif.data;
 		gameObject.GetComponent<Renderer>().material = (Material)payload["material"];
 		StartCoroutine(SwitchBackMaterial((float)payload["duration"]));
