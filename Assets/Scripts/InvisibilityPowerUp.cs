@@ -18,8 +18,9 @@ public class InvisibilityPowerUp : GenericPowerUp {
 
 	void OnTriggerEnter(Collider other) {
 		base.OnTriggerEnter(other);
-		rend.material = powerUpMaterial;
-		StartCoroutine(changeBackMaterial(powerUpDuration));
+		if(other.gameObject.tag == "Player"){
+			//other.gameObject.GetComponent<PlayerControl>().;
+		}
 	}
 	#pragma warning restore 0114
 
