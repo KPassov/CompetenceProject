@@ -15,6 +15,7 @@ public class NPCAI : MonoBehaviour {
     	navAgent = GetComponent<NavMeshAgent>();
         player = GameObject.FindGameObjectWithTag("Player");
         target = transform.position;
+        StopTime(4f);
 	}
 	
     void Update(){
@@ -23,15 +24,31 @@ public class NPCAI : MonoBehaviour {
                 PanicMove();
             else
                 CleverMove();
+        } else {
+            Idle();
         }
     }
 
-    public void IgnorePlayer(float seconds){
-        playerInvis = true;
+    public void InvisPlayer(float seconds){
         StartCoroutine(Invis(seconds));
     }
 
+    public void StopTime(float seconds){
+        StartCoroutine(Freeze(seconds));
+    }
+
+    IEnumerator Freeze(float seconds){
+        float oldSpeed = navAgent.speed;
+        float oldAngular = navAgent.angularSpeed;
+        navAgent.speed = 0f;
+        navAgent.angularSpeed = 0f;
+        yield return new WaitForSeconds(seconds); 
+        navAgent.angularSpeed = oldAngular;
+        navAgent.speed = oldSpeed;
+    }
+
     IEnumerator Invis(float seconds){
+        playerInvis = true;
         yield return new WaitForSeconds(seconds); 
         playerInvis = false;
     }
@@ -48,6 +65,10 @@ public class NPCAI : MonoBehaviour {
             navAgent.destination = new Vector3(moveDirection.x, 0, moveDirection.z);
             target = navAgent.destination;
         }
+    }
+
+    void Idle(){
+        
     }
 
     private bool nearTarget(Vector3 target, Vector3 position){
