@@ -11,16 +11,16 @@ public class PlayerControl : MonoBehaviour {
 	}
 	
 	void Update () {
-        if(Input.GetButton("down")){
-            rb.AddForce(Vector3.backwards * thrust);
+        if(Input.GetKey("down")){
+            rb.AddForce(Vector3.back * thrust);
         } 
-        if(Input.GetButton("up")){
-            rb.AddForce(Vector3.forwards * thrust);
+        if(Input.GetKey("up")){
+            rb.AddForce(Vector3.forward * thrust);
         }  
-        if(Input.GetButton("left")){
+        if(Input.GetKey("left")){
             rb.AddForce(Vector3.left * thrust);    
         }  
-        if(Input.GetButton("right")){
+        if(Input.GetKey("right")){
             rb.AddForce(Vector3.right * thrust);    
         }
 	}
