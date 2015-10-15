@@ -10,12 +10,27 @@ public class NPCAI : MonoBehaviour {
     Vector3 target;
     bool playerInvis = false;
 
+    void OnCollisionEnter(Collision col){
+        if(col.gameObject.tag == "Player"){
+            // Die();
+            gameObject.SetActive(false);
+        }
+    }
+
+    // void Die(){
+            // gameObject.GetComponentInChildren<ParticleSystem>().Play();
+            // gameObject.SetActive(false);
+    // }
+
+    // IEnumerator DieIn(float seconds){
+        
+    // }
 
 	void Awake () {
     	navAgent = GetComponent<NavMeshAgent>();
         player = GameObject.FindGameObjectWithTag("Player");
         target = transform.position;
-        StopTime(4f);
+        NotificationCenter.DefaultCenter.AddObserver(this, "InvisibilityTriggered");       
 	}
 	
     void Update(){
@@ -29,8 +44,10 @@ public class NPCAI : MonoBehaviour {
         }
     }
 
-    public void InvisPlayer(float seconds){
-        StartCoroutine(Invis(seconds));
+    public void InvisibilityTriggered(NotificationCenter.Notification notif){
+        print("Invisible!");
+        Hashtable payload = notif.data;
+        StartCoroutine(Invis((float)payload["duration"]));
     }
 
     public void StopTime(float seconds){
