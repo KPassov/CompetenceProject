@@ -24,7 +24,7 @@ public class InvisibilityPowerUp : GenericPowerUp {
 			payload.Add("material", powerUpMaterial);
 			payload.Add("duration", powerUpDuration);
 
-			NotificationCenter.DefaultCenter.PostNotification(this, "InvisibilityTriggered", payload);
+			NotificationCenter.DefaultCenter.PostNotification(this, "InvisibilityTriggered",payload);
 		}
 	}
 	#pragma warning restore 0114
