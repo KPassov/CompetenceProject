@@ -28,13 +28,11 @@ public class NPCAI : MonoBehaviour {
 
     public void IgnorePlayer(float seconds){
         playerInvis = true;
-        print("INVIS! :)");
         StartCoroutine(Invis(seconds));
     }
 
     IEnumerator Invis(float seconds){
         yield return new WaitForSeconds(seconds); 
-        print("VIS! :(");
         playerInvis = false;
     }
 
