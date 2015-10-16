@@ -22,7 +22,6 @@ public class InvisibilityPowerUp : GenericPowerUp {
 				Hashtable payload  = new Hashtable();
 				payload.Add("material", powerUpMaterial);
 				payload.Add("duration", powerUpDuration);
-
 				NotificationCenter.DefaultCenter.PostNotification(this, "InvisibilityTriggered",payload);
 			}
 		}
