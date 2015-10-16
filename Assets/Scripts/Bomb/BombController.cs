@@ -4,8 +4,6 @@ using System.Collections;
 public class BombController : MonoBehaviour {
 
 	public float countdownTime = 3.0f;
-	public float pushRadius = 3.0f;
-	public float killRadius = 1.0f;
 
 	private GameObject grenade;
 	private GameObject explosion;
@@ -36,6 +34,11 @@ public class BombController : MonoBehaviour {
 	void Explode(){
 		grenade.SetActive(false);
 		explosion.SetActive(true);
+
+		Hashtable payload = new Hashtable();
+		payload["explosion"] = explosion;
+
+		NotificationCenter.DefaultCenter.PostNotification(this, "Explode",payload);
 	}
 
 
