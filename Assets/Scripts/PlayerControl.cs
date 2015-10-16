@@ -24,6 +24,10 @@ public class PlayerControl : MonoBehaviour {
         if(Input.GetKey("left")){
             rb.AddForce(Vector3.left * thrust);    
         }
+		if(Input.GetKeyDown("space")){
+			GameObject bomb = Resources.Load("Prefabs/Bomb", typeof(GameObject)) as GameObject;
+			Instantiate(bomb,transform.position,Quaternion.identity);
+		}
         rb.velocity = new Vector3(Mathf.Clamp(rb.velocity.x, -maxSpeed, maxSpeed),
                                   Mathf.Clamp(rb.velocity.y, -maxSpeed, maxSpeed),
                                   Mathf.Clamp(rb.velocity.z, -maxSpeed, maxSpeed));

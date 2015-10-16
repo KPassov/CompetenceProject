@@ -45,5 +45,9 @@ public class PlayerActions : MonoBehaviour {
 		rend.material = currentMaterial;
 	}
 
+	void OnDestroy(){
+		NotificationCenter.DefaultCenter.RemoveObserver(this, "InvisibilityTriggered");
+	}
+
 
 }

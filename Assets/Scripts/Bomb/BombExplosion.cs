@@ -11,7 +11,7 @@ public class BombExplosion : MonoBehaviour {
 	public float killRadius = 5.0f;
 
 
-	void Start()
+	void Awake()
 	{
 		NotificationCenter.DefaultCenter.AddObserver(this,"Explode");
 	}
@@ -58,6 +58,9 @@ public class BombExplosion : MonoBehaviour {
 		}
 		foreach (var rb in killedRigidbodies)
 		{
+
+			Debug.Log(rb.gameObject.tag);
+
 			if(rb.gameObject.CompareTag("NPC")){
 				rb.gameObject.GetComponent<GeneralAI>().Action("Kill");
 			}
@@ -68,8 +71,8 @@ public class BombExplosion : MonoBehaviour {
 		}
 	}
 
-	// Update is called once per frame
-	void Update () {
-		
+
+	void OnDestroy(){
+		NotificationCenter.DefaultCenter.RemoveObserver(this,"Explode");
 	}
 }
