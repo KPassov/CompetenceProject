@@ -59,7 +59,11 @@ public class BombExplosion : MonoBehaviour {
 		foreach (var rb in killedRigidbodies)
 		{
 			if(rb.gameObject.CompareTag("NPC")){
+				rb.gameObject.GetComponent<GeneralAI>().Action("Kill");
+			}
 
+			if(rb.gameObject.CompareTag("Player")){
+				rb.gameObject.SetActive(false);
 			}
 		}
 	}
