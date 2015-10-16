@@ -24,7 +24,7 @@ public abstract class GeneralAI : MonoBehaviour {
         navAgent.speed = newSpeed;
     }
 
-    public void Move(string state){
+    public void Action(string state){
 		switch(state){
             case"Close":
                 CloseMove();
@@ -35,6 +35,9 @@ public abstract class GeneralAI : MonoBehaviour {
             case "Idle":
                 IdleMove();
                 break;
+			case "Kill":
+				Kill ();
+				break;
             default:
                 Debug.LogWarning("No state named " + state);
                 break;
@@ -50,7 +53,34 @@ public abstract class GeneralAI : MonoBehaviour {
 
 	abstract protected void Touched ();
 
+	abstract protected void Kill();
+
     protected bool nearTarget(Vector3 target, Vector3 position){
         return (target - position).magnitude < 1f;
     }
+
+	protected void DecayAndDestroy(){
+		StartCoroutine(ParticlesFor(1.5f));
+		StartCoroutine(Sink(2f));
+	}
+
+	private IEnumerator ParticlesFor(float seconds){
+		ParticleSystem parSystem = GetComponentInChildren<ParticleSystem> ();
+		if (parSystem != null) {
+			parSystem.Play ();
+			yield return new WaitForSeconds (seconds);
+			parSystem.Stop ();
+		}
+	}
+
+	private IEnumerator Sink(float seconds){
+		float stopTime = Time.time + seconds;
+		tag = "DeadNPC";
+		while (stopTime > Time.time) {
+			print (gameObject.transform.position);
+			gameObject.transform.position = new Vector3(transform.position.x, transform.position.y - 0.01f,transform.position.z);
+			yield return new WaitForEndOfFrame();
+		}
+		gameObject.SetActive(false);
+	}
 }
