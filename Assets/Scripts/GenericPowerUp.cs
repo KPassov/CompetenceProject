@@ -10,7 +10,8 @@ public class GenericPowerUp : MonoBehaviour {
 
 	public Material powerUpMaterial;
 
-	private bool powerUpActive = true;
+	[HideInInspector] // Hides var below
+	public bool powerUpActive = true;
 
 	[HideInInspector] // Hides var below
 	public Renderer rend;
@@ -55,10 +56,12 @@ public class GenericPowerUp : MonoBehaviour {
 		//has picked up
 		if (other.gameObject.tag.Equals("Player"))
 		{
-			Debug.Log ("Generic OnTriggerEnter() fired!");
-			powerUpActive = false;
-			rend.material = inactiveMaterial;
-			StartCoroutine(changeBackMaterial(powerUpDuration));
+			if(powerUpActive){
+				Debug.Log ("Generic OnTriggerEnter() fired!");
+				powerUpActive = false;
+				rend.material = inactiveMaterial;
+				StartCoroutine(changeBackMaterial(powerUpDuration));
+			}
 		}
 	}
 }

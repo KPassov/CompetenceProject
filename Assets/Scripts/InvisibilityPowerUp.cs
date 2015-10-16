@@ -17,15 +17,17 @@ public class InvisibilityPowerUp : GenericPowerUp {
 
 
 	void OnTriggerEnter(Collider other) {
-		base.OnTriggerEnter(other);
 		if(other.gameObject.tag == "Player"){
+			if(powerUpActive){
+				Hashtable payload  = new Hashtable();
+				payload.Add("material", powerUpMaterial);
+				payload.Add("duration", powerUpDuration);
 
-			Hashtable payload  = new Hashtable();
-			payload.Add("material", powerUpMaterial);
-			payload.Add("duration", powerUpDuration);
-
-			NotificationCenter.DefaultCenter.PostNotification(this, "InvisibilityTriggered",payload);
+				NotificationCenter.DefaultCenter.PostNotification(this, "InvisibilityTriggered",payload);
+			}
 		}
+		// fire the super method
+		base.OnTriggerEnter(other);
 	}
 	#pragma warning restore 0114
 
