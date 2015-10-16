@@ -10,22 +10,23 @@ public class GenericPowerUp : MonoBehaviour {
 
 	public Material powerUpMaterial;
 
+	private bool powerUpActive = true;
+
 	[HideInInspector] // Hides var below
 	public Renderer rend;
 	[HideInInspector] // Hides var below
 	public Material currentMaterial;
 	[HideInInspector] // Hides var below
-	public Shader currentShader;
-	[HideInInspector] // Hides var below
-	public Shader powerUpShader;
+	public Material inactiveMaterial;
 
 
 	public void SuperStart(){
 		rend = GetComponent<Renderer>();
 		StartCoroutine(SpinPowerUp());
-		currentShader = rend.material.shader;
-		powerUpShader = Shader.Find("Toon/Basic Outline");
+
+		//setting up materials
 		currentMaterial = rend.material;
+		inactiveMaterial =  Resources.Load("Materials/EmptyPowerUp", typeof(Material)) as Material;
 	}
 	// Use this for initialization
 	public virtual void Start () {
@@ -44,8 +45,9 @@ public class GenericPowerUp : MonoBehaviour {
 		}
 	}
 
-	public virtual IEnumerator changeBackMaterial(int afterSeconds){
+	public virtual IEnumerator changeBackMaterial(float afterSeconds){
 		yield return new WaitForSeconds(afterSeconds);
+		powerUpActive = true;
 		rend.material = currentMaterial;
  	}
 
@@ -54,6 +56,9 @@ public class GenericPowerUp : MonoBehaviour {
 		if (other.gameObject.tag.Equals("Player"))
 		{
 			Debug.Log ("Generic OnTriggerEnter() fired!");
+			powerUpActive = false;
+			rend.material = inactiveMaterial;
+			StartCoroutine(changeBackMaterial(powerUpDuration));
 		}
 	}
 }
