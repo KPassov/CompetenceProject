@@ -17,6 +17,6 @@ public class PanicCollider : MonoBehaviour {
 	
 	void OnTriggerStay(Collider other) {
 		if (other.gameObject.tag == "NPC")
-			npcDirectorS.NPCCollision (other.gameObject.GetComponent<NPCAI>(), "Panic");
+			npcDirectorS.NPCCollision (other.gameObject.GetComponent<GeneralAI>(), "VeryClose");
 	}
 }

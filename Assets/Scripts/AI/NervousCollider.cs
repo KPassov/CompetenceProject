@@ -17,7 +17,7 @@ public class NervousCollider : MonoBehaviour {
 
 	void OnTriggerStay(Collider other) {
 		if (other.gameObject.tag == "NPC" && (other.gameObject.transform.position - player.transform.position).magnitude > 4f) {
-			npcDirectorS.NPCCollision (other.gameObject.GetComponent<NPCAI>(), "Nervous");
+			npcDirectorS.NPCCollision (other.gameObject.GetComponent<GeneralAI>(), "Close");
 		}
 	}
 }
