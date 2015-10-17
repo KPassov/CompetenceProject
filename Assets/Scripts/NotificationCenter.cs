@@ -17,21 +17,27 @@ using System.Collections.Generic;
 
 public class NotificationCenter : MonoBehaviour
 {
+	private static GameObject notificationObject;
 	private static NotificationCenter defaultCenter;
 	public static NotificationCenter DefaultCenter {
 		get {
 			if (!defaultCenter) {
-				GameObject notificationObject = new GameObject ("Default Notification Center");
-				
-				defaultCenter = notificationObject.AddComponent<NotificationCenter> ();
-			}
 			
+				GameObject[] notifCenters = GameObject.FindGameObjectsWithTag ("NotificationCenter");
+				foreach(GameObject notifCenter in notifCenters){
+					Destroy(notifCenter);
+				}
+
+				notificationObject = new GameObject ("Notification Center");
+				notificationObject.tag = "NotificationCenter";
+				defaultCenter = notificationObject.AddComponent<NotificationCenter>();
+			}
+		
 			return defaultCenter; 
 		}
 	}
-	
-	
-	
+
+
 	// Our hashtable containing all the notifications.  Each notification in the hash table is an ArrayList that contains all the observers for that notification.
 	Hashtable notifications = new Hashtable();
 	
@@ -121,4 +127,7 @@ public class NotificationCenter : MonoBehaviour
 		
 		
 	}
+
+
+
 }
