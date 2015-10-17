@@ -19,7 +19,8 @@ public class BombPowerUp : GenericPowerUp {
 		if(other.gameObject.tag == "Player"){
 			if(powerUpActive){
 				Hashtable payload  = new Hashtable();
-				NotificationCenter.DefaultCenter.PostNotification(this, "BombedPickedUp",payload);
+
+				NotificationCenter.DefaultCenter.PostNotification(this, "BombPickedUp",payload);
 			}
 		}
 		// fire the super method
