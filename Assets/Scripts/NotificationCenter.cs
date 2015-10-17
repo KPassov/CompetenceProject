@@ -21,19 +21,15 @@ public class NotificationCenter : MonoBehaviour
 	private static NotificationCenter defaultCenter;
 	public static NotificationCenter DefaultCenter {
 		get {
-			if (!defaultCenter) {
-			
-				GameObject[] notifCenters = GameObject.FindGameObjectsWithTag ("NotificationCenter");
-				foreach(GameObject notifCenter in notifCenters){
-					Destroy(notifCenter);
+			if (defaultCenter == null) {
+				defaultCenter = FindObjectOfType<NotificationCenter> ();
+				if (defaultCenter == null) {
+					GameObject obj = new GameObject ();
+					obj.hideFlags = HideFlags.HideAndDontSave;
+					defaultCenter = obj.AddComponent<NotificationCenter> ();
 				}
-
-				notificationObject = new GameObject ("Notification Center");
-				notificationObject.tag = "NotificationCenter";
-				defaultCenter = notificationObject.AddComponent<NotificationCenter>();
 			}
-		
-			return defaultCenter; 
+			return defaultCenter;
 		}
 	}
 
