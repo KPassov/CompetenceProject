@@ -48,16 +48,16 @@
  
       fixed4 frag(v2f i) : COLOR
       {
-        fixed4 answer;
+        fixed4 o;
  
         float lx = step(_LineWidth, i.texcoord1.x);
         float ly = step(_LineWidth, i.texcoord1.y);
         float hx = step(i.texcoord1.x, 1.0 - _LineWidth);
         float hy = step(i.texcoord1.y, 1.0 - _LineWidth);
  
-        answer = lerp(_LineColor, _GridColor, lx*ly*hx*hy);
+        o = lerp(_LineColor, _GridColor, lx*ly*hx*hy);
  
-        return answer;
+        return o;
       }
       ENDCG
      }

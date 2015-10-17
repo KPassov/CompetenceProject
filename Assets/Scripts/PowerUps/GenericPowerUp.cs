@@ -6,9 +6,7 @@ public class GenericPowerUp : MonoBehaviour {
 	public bool spinPowerUp = true;
 	public float rotationSpeed = 45.0f;
 
-	public float powerUpDuration = 10;
-
-	public Material powerUpMaterial;
+	public float powerUpInactiveTime = 10;
 
 	[HideInInspector] // Hides var below
 	public bool powerUpActive = true;
@@ -60,7 +58,7 @@ public class GenericPowerUp : MonoBehaviour {
 				Debug.Log ("Generic OnTriggerEnter() fired!");
 				powerUpActive = false;
 				rend.material = inactiveMaterial;
-				StartCoroutine(changeBackMaterial(powerUpDuration));
+				StartCoroutine(changeBackMaterial(powerUpInactiveTime));
 			}
 		}
 	}
