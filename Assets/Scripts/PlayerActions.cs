@@ -44,6 +44,8 @@ public class PlayerActions : MonoBehaviour {
 
 	void BombPickedUp(NotificationCenter.Notification notif){
 		//the player picked up the bomb
+		var inventoryController = gameObject.GetComponent<PlayerInventoryController>();
+		inventoryController.bombsInInnventory++;
 	}
 
 	IEnumerator SwitchBackMaterial(float afterSeconds){

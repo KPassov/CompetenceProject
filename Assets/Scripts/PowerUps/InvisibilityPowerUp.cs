@@ -16,8 +16,7 @@ public class InvisibilityPowerUp : GenericPowerUp {
 	void Update () {
 	
 	}
-
-
+	
 	void OnTriggerEnter(Collider other) {
 		if(other.gameObject.tag == "Player"){
 			if(powerUpActive){

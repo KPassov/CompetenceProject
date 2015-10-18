@@ -20,6 +20,8 @@ public class BombPowerUp : GenericPowerUp {
 			if(powerUpActive){
 				Hashtable payload  = new Hashtable();
 
+				//add bomb to the inventory
+
 				NotificationCenter.DefaultCenter.PostNotification(this, "BombPickedUp",payload);
 			}
 		}
