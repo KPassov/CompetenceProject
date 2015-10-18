@@ -15,7 +15,7 @@ public class PlayerActions : MonoBehaviour {
 		currentMaterial = rend.material ;
 		NotificationCenter.DefaultCenter.AddObserver(this, "InvisibilityTriggered");
 		NotificationCenter.DefaultCenter.AddObserver(this, "BombPickedUp");
-
+		NotificationCenter.DefaultCenter.AddObserver(this, "GooPickedUp");
 	}
 	
 	// Update is called once per frame
@@ -45,7 +45,11 @@ public class PlayerActions : MonoBehaviour {
 	void BombPickedUp(NotificationCenter.Notification notif){
 		//the player picked up the bomb
 		var inventoryController = gameObject.GetComponent<PlayerInventoryController>();
-		inventoryController.bombsInInnventory++;
+		inventoryController.bombsInInventory++;
+	}
+
+	void GooPickedUp(NotificationCenter.Notification notif){
+
 	}
 
 	IEnumerator SwitchBackMaterial(float afterSeconds){

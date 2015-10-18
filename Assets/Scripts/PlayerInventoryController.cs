@@ -1,9 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class PlayerInventoryController : MonoBehaviour {
+public class PlayerInventoryController : MonoBehaviour {	
 
-	public int bombsInInnventory = 0;
+	public int bombsInInventory = 0;
 
 	// Use this for initialization
 	void Start () {

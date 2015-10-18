@@ -26,12 +26,10 @@ public class PlayerControl : MonoBehaviour {
         }
 		if(Input.GetKeyDown("space")){
 			var inventoryController = gameObject.GetComponent<PlayerInventoryController>();
-			if (inventoryController.bombsInInnventory > 0){
+			if (inventoryController.bombsInInventory > 0){
 				GameObject bomb = Resources.Load("Prefabs/Bomb", typeof(GameObject)) as GameObject;
 				Instantiate(bomb,transform.position,Quaternion.identity);
-	
-				inventoryController.bombsInInnventory--;
-
+				inventoryController.bombsInInventory--;
 			}
 		}
         rb.velocity = new Vector3(Mathf.Clamp(rb.velocity.x, -maxSpeed, maxSpeed),
