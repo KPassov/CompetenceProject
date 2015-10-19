@@ -64,7 +64,8 @@ public abstract class GeneralAI : MonoBehaviour {
 
     virtual protected void IdleMove ()
     {
-
+        navAgent.destination = transform.position + new Vector3(Random.Range(-2,2), 0f, Random.Range(-2,2));
+        target = navAgent.destination;
     }
 
     virtual protected void Touched ()
@@ -95,7 +96,7 @@ public abstract class GeneralAI : MonoBehaviour {
 			parSystem.Stop ();
 		}
 	}
-
+    
 	private IEnumerator Sink(float seconds){
 		float stopTime = Time.time + seconds;
 		tag = "DeadNPC";

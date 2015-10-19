@@ -2,11 +2,7 @@
 using System.Collections;
 
 public class FleeingAI : GeneralAI {
-
-	override protected void IdleMove(){
-
-	}
-
+    
 	override protected void Touched(){
 		Kill();
 	}
