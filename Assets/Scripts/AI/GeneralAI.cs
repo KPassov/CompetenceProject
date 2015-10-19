@@ -7,12 +7,10 @@ public abstract class GeneralAI : MonoBehaviour {
 	protected GameObject player;
 
 	protected Vector3 moveDirection;
-	protected Vector3 target;
 
 	void Awake () {
     	navAgent = GetComponent<NavMeshAgent>();
         player = GameObject.FindGameObjectWithTag("Player");
-        target = transform.position;
 	}
 	
 	void OnCollisionEnter(Collision col){
@@ -26,6 +24,9 @@ public abstract class GeneralAI : MonoBehaviour {
 
     public void Action(string state){
 		switch(state){
+            case "NoLongerClose":
+                NoClose();
+                break;
             case"Close":
                 CloseMove();
                 break;
@@ -44,42 +45,42 @@ public abstract class GeneralAI : MonoBehaviour {
         }
     }
 
-
+    virtual protected void NoClose()
+    {
+        navAgent.ResetPath();
+    }
     virtual protected void CloseMove()
     {
-        if (nearTarget(target, transform.position))
+        if (nearTarget(navAgent.destination, transform.position))
         {
             moveDirection = transform.position + Vector3.Normalize(transform.position - player.transform.position) * 3f;
-            navAgent.destination = new Vector3(moveDirection.x, 0, moveDirection.z);
-            target = navAgent.destination;
+            navAgent.SetDestination(new Vector3(moveDirection.x, 0, moveDirection.z));
         }
     }
 
     virtual protected void VeryCloseMove ()
     {
         moveDirection = transform.position + Vector3.Normalize(transform.position - player.transform.position) * 3f;
-        navAgent.destination = new Vector3(moveDirection.x, 0, moveDirection.z);
-        target = navAgent.destination;
+        navAgent.SetDestination(new Vector3(moveDirection.x, 0, moveDirection.z));
     }
 
     virtual protected void IdleMove ()
     {
-        navAgent.destination = transform.position + new Vector3(Random.Range(-2,2), 0f, Random.Range(-2,2));
-        target = navAgent.destination;
+       
     }
 
     virtual protected void Touched ()
     {
-
+        Kill();
     }
 
     virtual protected void Kill()
     {
-
+        DecayAndDestroy();
     }
 
     protected bool nearTarget(Vector3 target, Vector3 position){
-        return (target - position).magnitude < 1f;
+        return (target - position).magnitude < 1.5f;
     }
 
 	protected void DecayAndDestroy(){
@@ -101,7 +102,6 @@ public abstract class GeneralAI : MonoBehaviour {
 		float stopTime = Time.time + seconds;
 		tag = "DeadNPC";
 		while (stopTime > Time.time) {
-			print (gameObject.transform.position);
 			gameObject.transform.position = new Vector3(transform.position.x, transform.position.y - 0.01f,transform.position.z);
 			yield return new WaitForEndOfFrame();
 		}

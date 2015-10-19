@@ -13,7 +13,7 @@ public class NPCDirector : MonoBehaviour {
 			npcs.Add(npc.GetComponent<GeneralAI>());
 		}
 		NotificationCenter.DefaultCenter.AddObserver(this, "InvisibilityTriggered");
-        StartCoroutine(IdleMovement());
+        //StartCoroutine(IdleMovement());
 	}
 
 	public void NPCCollision(GeneralAI npc, string state){
@@ -43,7 +43,7 @@ public class NPCDirector : MonoBehaviour {
                 print("Idling");
                 npcs[Random.Range(0, npcs.Count - 1)].Action("Idle");
             }
-            yield return new WaitForSeconds(Mathf.Max(0.2f, npcs.Count / 4f));
+            yield return new WaitForSeconds(Mathf.Max(0.2f, npcs.Count / 8f));
         }
     }
 }
