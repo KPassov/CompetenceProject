@@ -45,21 +45,44 @@ public abstract class GeneralAI : MonoBehaviour {
     }
 
 
-	abstract protected void CloseMove ();
+    virtual protected void CloseMove()
+    {
+        if (nearTarget(target, transform.position))
+        {
+            moveDirection = transform.position + Vector3.Normalize(transform.position - player.transform.position) * 3f;
+            navAgent.destination = new Vector3(moveDirection.x, 0, moveDirection.z);
+            target = navAgent.destination;
+        }
+    }
 
-	abstract protected void VeryCloseMove ();
+    virtual protected void VeryCloseMove ()
+    {
+        moveDirection = transform.position + Vector3.Normalize(transform.position - player.transform.position) * 3f;
+        navAgent.destination = new Vector3(moveDirection.x, 0, moveDirection.z);
+        target = navAgent.destination;
+    }
 
-	abstract protected void IdleMove ();
+    virtual protected void IdleMove ()
+    {
 
-	abstract protected void Touched ();
+    }
 
-	abstract protected void Kill();
+    virtual protected void Touched ()
+    {
+
+    }
+
+    virtual protected void Kill()
+    {
+
+    }
 
     protected bool nearTarget(Vector3 target, Vector3 position){
         return (target - position).magnitude < 1f;
     }
 
 	protected void DecayAndDestroy(){
+        GetComponent<Collider>().enabled = false;
 		StartCoroutine(ParticlesFor(1.5f));
 		StartCoroutine(Sink(2f));
 	}
