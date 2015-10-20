@@ -55,7 +55,6 @@ public class GenericPowerUp : MonoBehaviour {
 		if (other.gameObject.tag.Equals("Player"))
 		{
 			if(powerUpActive){
-				Debug.Log ("Generic OnTriggerEnter() fired!");
 				powerUpActive = false;
 				rend.material = inactiveMaterial;
 				StartCoroutine(changeBackMaterial(powerUpInactiveTime));

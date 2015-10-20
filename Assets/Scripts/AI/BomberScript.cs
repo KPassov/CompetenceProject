@@ -9,17 +9,19 @@ public class BomberScript : MonoBehaviour
     Vector3 moveDirection;
     NavMeshAgent navAgent;
     Vector3 bombSite;
+	bool playerInvis;
 
     void Start()
     {
         bombSite = GameObject.FindGameObjectsWithTag("BombSite")[Random.Range(0, 2)].transform.position;
         navAgent = GetComponent<NavMeshAgent>();
-        player = GameObject.FindGameObjectWithTag("Player");
+		player = GameObject.FindGameObjectWithTag("Player");
+		NotificationCenter.DefaultCenter.AddObserver(this, "InvisibilityTriggered");
     }
 
     void Update()
     {
-        if ((player.transform.position - transform.position).magnitude < 4f)
+        if ((player.transform.position - transform.position).magnitude < 4f && !playerInvis)
 			MoveAwayFast ();
 		else {
 			if(navAgent.enabled == true)
@@ -37,7 +39,17 @@ public class BomberScript : MonoBehaviour
     }
 
 
-
+	
+	void InvisibilityTriggered(NotificationCenter.Notification notif){
+		Hashtable payload = notif.data;
+		StartCoroutine(Invis((float)payload["duration"]));
+	}
+	
+	IEnumerator Invis(float seconds){
+		playerInvis = true;
+		yield return new WaitForSeconds(seconds); 
+		playerInvis = false;
+	}
     // Killing code
     void OnCollisionEnter(Collision col)
     {

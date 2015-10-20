@@ -59,8 +59,6 @@ public class BombExplosion : MonoBehaviour {
 		foreach (var rb in killedRigidbodies)
 		{
 
-			Debug.Log(rb.gameObject.tag);
-
 			if(rb.gameObject.CompareTag("NPC")){
 				//rb.gameObject.GetComponent<AIScript>().;
 				rb.gameObject.SetActive(false);
