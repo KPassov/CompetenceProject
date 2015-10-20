@@ -3,27 +3,17 @@ using System.Collections;
 
 public class BombAI : GeneralAI {
 
-    GameObject[] bombSites;
+    Vector3 bombSite;
 
     void Start()
     {
-        bombSites = GameObject.FindGameObjectsWithTag("BombSite");
-        setRandomBombSite();
+        bombSite = GameObject.FindGameObjectsWithTag("BombSite")[Random.Range(0, 1)].transform.position;
+        navAgent.SetDestination(bombSite);
     }
     
-    void setRandomBombSite()
-    {
-        navAgent.SetDestination(bombSites[Random.Range(0, 2)].transform.position);
-    }
-
     override protected void CloseMove()
     {
-        setRandomBombSite();
-    }
-
-    protected override void NoClose()
-    {
-        setRandomBombSite();
+        navAgent.SetDestination(bombSite);
     }
 
     protected override void Touched()
