@@ -8,6 +8,7 @@ public class PlayerActions : MonoBehaviour {
 	private Material currentMaterial;
 	private Renderer rend;
 
+
 	// Use this for initialization
 	void Start () {
 		runningCoroutines = new ArrayList ();

@@ -36,7 +36,6 @@ public class TerroristBombController : MonoBehaviour {
 			countdownTime += sequence[i].clip.length;
 		}
 
-		Debug.LogWarning("Countdown time: " + countdownTime.ToString());
 
 		getout.PlayScheduled (AudioSettings.dspTime + 15.0f);
 

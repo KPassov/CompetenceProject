@@ -7,14 +7,16 @@ public class FleeingScript : MonoBehaviour {
 
     Vector3 moveDirection;
     NavMeshAgent navAgent;
+	bool playerInvis = false;
 
 	void Start () {
         navAgent = GetComponent<NavMeshAgent>();
-        player = GameObject.FindGameObjectWithTag("Player");
+		player = GameObject.FindGameObjectWithTag("Player");
+		NotificationCenter.DefaultCenter.AddObserver(this, "InvisibilityTriggered");
 	}
 	
 	void Update () {
-        if ((player.transform.position - transform.position).magnitude < 8f) {
+        if ((player.transform.position - transform.position).magnitude < 8f && !playerInvis) {
             if ((player.transform.position - transform.position).magnitude < 4f)
             {
                 MoveAwayFast();
@@ -24,6 +26,17 @@ public class FleeingScript : MonoBehaviour {
             }
         }
     }
+
+	void InvisibilityTriggered(NotificationCenter.Notification notif){
+		Hashtable payload = notif.data;
+		StartCoroutine(Invis((float)payload["duration"]));
+	}
+	
+	IEnumerator Invis(float seconds){
+		playerInvis = true;
+		yield return new WaitForSeconds(seconds); 
+		playerInvis = false;
+	}
 
     void MoveAway()
     {
