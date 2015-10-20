@@ -14,6 +14,8 @@ public class TerroristBombController : MonoBehaviour {
 	public AudioSource beep4;
 	public AudioSource beep5;
 	public AudioSource explode;
+	public AudioSource getout;
+	public AudioSource disarm;
 
 	AudioSource[] sequence;
 
@@ -35,6 +37,8 @@ public class TerroristBombController : MonoBehaviour {
 		}
 
 		Debug.LogWarning("Countdown time: " + countdownTime.ToString());
+
+		getout.PlayScheduled (AudioSettings.dspTime + 15.0f);
 
 		StartCoroutine (Beep ());
 		StartCoroutine(StartCountDown());
@@ -69,5 +73,24 @@ public class TerroristBombController : MonoBehaviour {
 		explode.Play ();
 	}
 
+	void OnTriggerEnter(Collider other){
+		if (other.gameObject.tag == "Player") {
+			Disarm();
+		}
+	}
+
+	void Disarm(){
+		StopAllCoroutines ();
+		getout.Stop ();
+		disarm.Play ();
+		GetComponent<SphereCollider> ().enabled = false;
+		grenade.GetComponentInChildren<ParticleSystem> ().Stop();
+		StartCoroutine (DestroyAfter(3.0f));
+	}
+
+	IEnumerator DestroyAfter(float seconds){
+		yield return new WaitForSeconds (seconds);
+		Destroy (gameObject);
+	}
 
 }
