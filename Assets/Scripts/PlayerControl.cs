@@ -7,8 +7,20 @@ public class PlayerControl : MonoBehaviour {
     public float thrust = 500f;
     public float maxSpeed = 10f;
 
+	public GameObject grenade;
+	public GameObject explosion;
+
+	public Texture pacman;
+	public Texture pacmanBomb;
+
+	public Material mat;
+
 	void Awake () {
         rb = GetComponent<Rigidbody>();	
+		grenade.SetActive(false);
+		explosion.SetActive(false);
+		//mat = GetComponent<Texture> ();
+		ShowAsBomb (true);
 	}
 	
 	void Update () {
@@ -35,5 +47,16 @@ public class PlayerControl : MonoBehaviour {
         rb.velocity = new Vector3(Mathf.Clamp(rb.velocity.x, -maxSpeed, maxSpeed),
                                   Mathf.Clamp(rb.velocity.y, -maxSpeed, maxSpeed),
                                   Mathf.Clamp(rb.velocity.z, -maxSpeed, maxSpeed));
+	}
+
+	public void ShowAsBomb(bool show){
+		if (show) {
+			grenade.SetActive(true);
+			mat.SetTexture("_MainTex", pacmanBomb);
+		} else {
+			grenade.SetActive(false);
+			explosion.SetActive(false);
+			mat.SetTexture("_MainTex", pacman);
+		}
 	}
 }
