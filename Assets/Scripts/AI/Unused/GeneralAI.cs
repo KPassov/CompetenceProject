@@ -5,14 +5,12 @@ public abstract class GeneralAI : MonoBehaviour {
 
 	protected NavMeshAgent navAgent;
 	protected GameObject player;
-	protected AudioController sfx;
 
 	protected Vector3 moveDirection;
 
 	void Awake () {
     	navAgent = GetComponent<NavMeshAgent>();
-		player = GameObject.FindGameObjectWithTag("Player");
-		sfx = GameObject.FindGameObjectWithTag("SFXController").GetComponent<AudioController>();
+        player = GameObject.FindGameObjectWithTag("Player");
 	}
 	
 	void OnCollisionEnter(Collision col){
@@ -50,7 +48,6 @@ public abstract class GeneralAI : MonoBehaviour {
     
 	protected void DecayAndDestroy(){
         GetComponent<Collider>().enabled = false;
-		sfx.playSound ("pacman_eatfruit");
 		StartCoroutine(ParticlesFor(1.5f));
 		StartCoroutine(Sink(2f));
 	}
