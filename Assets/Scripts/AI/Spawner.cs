@@ -5,12 +5,12 @@ public class Spawner : MonoBehaviour {
 
 	Transform[] spawnPoints;
 
-	float fleeFrec = 4f;
-	float minFleeSpawn = 2f;
+	float fleeFrec = 5f;
+	float minFleeSpawn = 1f;
 
 	float waitBeforeStartSpawningBombs = 10f;
-	float bombFrec = 10f;
-	float minBombSpawn = 3f;
+	float bombFrec = 15f;
+	float minBombSpawn = 2f;
 
 	// Use this for initialization
 	void Start () {
