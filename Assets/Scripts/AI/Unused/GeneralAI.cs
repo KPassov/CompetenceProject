@@ -17,26 +17,17 @@ public abstract class GeneralAI : MonoBehaviour {
 		if (col.gameObject.tag == "Player")
 			Touched ();
 	}
-
-    public void ChangeSpeed(float newSpeed){
-        navAgent.speed = newSpeed;
-    }
-
+    
     public void Action(string state){
+        print(state);
 		switch(state){
-            case "NoLongerClose":
-                NoClose();
+            case "CloseEnter":
+				CloseEnter();
                 break;
-            case"Close":
-                CloseMove();
+            case "CloseExit":
+                CloseExit();
                 break;
-            case "VeryClose":
-				VeryCloseMove();
-                break;
-            case "Idle":
-                IdleMove();
-                break;
-			case "Kill":
+            case "Kill":
 				Kill ();
 				break;
             default:
@@ -45,44 +36,16 @@ public abstract class GeneralAI : MonoBehaviour {
         }
     }
 
-    virtual protected void NoClose()
-    {
-        navAgent.ResetPath();
-    }
-    virtual protected void CloseMove()
-    {
-        if (nearTarget(navAgent.destination, transform.position))
-        {
-            moveDirection = transform.position + Vector3.Normalize(transform.position - player.transform.position) * 3f;
-            navAgent.SetDestination(new Vector3(moveDirection.x, 0, moveDirection.z));
-        }
-    }
+    abstract protected void CloseEnter();
+    abstract protected void CloseExit();
+    abstract protected void Touched();
+    abstract protected void Kill();
 
-    virtual protected void VeryCloseMove ()
+    protected bool nearTarget(Vector3 target, Vector3 position)
     {
-        moveDirection = transform.position + Vector3.Normalize(transform.position - player.transform.position) * 3f;
-        navAgent.SetDestination(new Vector3(moveDirection.x, 0, moveDirection.z));
-    }
-
-    virtual protected void IdleMove ()
-    {
-       
-    }
-
-    virtual protected void Touched ()
-    {
-        Kill();
-    }
-
-    virtual protected void Kill()
-    {
-        DecayAndDestroy();
-    }
-
-    protected bool nearTarget(Vector3 target, Vector3 position){
         return (target - position).magnitude < 1.5f;
     }
-
+    
 	protected void DecayAndDestroy(){
         GetComponent<Collider>().enabled = false;
 		StartCoroutine(ParticlesFor(1.5f));
