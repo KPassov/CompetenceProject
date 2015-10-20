@@ -16,6 +16,10 @@ public class PanicCollider : MonoBehaviour {
 	}
 	
 	void OnTriggerStay(Collider other) {
+		if (other.gameObject.tag != "Untagged" && other.gameObject.tag != "Player") { 
+			print(other.tag);
+			print(Time.time);
+		}
 		if (other.gameObject.tag == "NPC")
 			npcDirectorS.NPCCollision (other.gameObject.GetComponent<GeneralAI>(), "VeryClose");
 	}
