@@ -81,8 +81,11 @@ public class TerroristBombController : MonoBehaviour {
 
 	void Disarm(){
 		StopAllCoroutines ();
-		getout.Stop ();
+		foreach (AudioSource s in sequence) {
+			s.Stop ();
+		}
 		disarm.Play ();
+		GameObject.FindGameObjectWithTag ("GUI").GetComponentInChildren<GUIScript> ().IncreaseHighScore (100);
 		GetComponent<SphereCollider> ().enabled = false;
 		grenade.GetComponentInChildren<ParticleSystem> ().Stop();
 		StartCoroutine (DestroyAfter(3.0f));
