@@ -57,9 +57,10 @@ public class TerroristBombController : MonoBehaviour {
 	void Explode(){
 		grenade.SetActive(false);
 		explosion.SetActive(true);
-
+		GetComponent<SphereCollider> ().enabled = false;
 		Hashtable payload = new Hashtable();
 		payload["explosion"] = explosion;
+		StartCoroutine (DestroyAfter(3.0f));
 
 		NotificationCenter.DefaultCenter.PostNotification(this, "Explode",payload);
 	}
