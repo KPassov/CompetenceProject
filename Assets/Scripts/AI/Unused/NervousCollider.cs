@@ -3,11 +3,9 @@ using System.Collections;
 
 public class NervousCollider : MonoBehaviour {
 	public GameObject npcDirector;
-	private NPCDirector npcDirectorS;
-	private GameObject player;
+		private GameObject player;
 
 	void Start(){
-		npcDirectorS = npcDirector.GetComponent<NPCDirector> ();
 		player = GameObject.FindGameObjectWithTag ("Player");
 	}
 

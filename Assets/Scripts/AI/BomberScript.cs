@@ -10,9 +10,11 @@ public class BomberScript : MonoBehaviour
     NavMeshAgent navAgent;
     Vector3 bombSite;
 	bool playerInvis;
+	GUIScript gui;
 
     void Start()
-    {
+	{
+		gui = GameObject.FindGameObjectWithTag ("GUI").GetComponent<GUIScript>();
         bombSite = GameObject.FindGameObjectsWithTag("BombSite")[Random.Range(0, 2)].transform.position;
         navAgent = GetComponent<NavMeshAgent>();
 		player = GameObject.FindGameObjectWithTag("Player");
@@ -54,7 +56,7 @@ public class BomberScript : MonoBehaviour
     void OnCollisionEnter(Collision col)
     {
         if (col.gameObject.tag == "Player") {
-            GameObject bomb = (GameObject) GameObject.Instantiate(Resources.Load("Prefabs/Bomb"), new Vector3(this.transform.position.x, 1f, this.transform.position.z), this.transform.rotation);
+            GameObject.Instantiate(Resources.Load("Prefabs/Bomb"), new Vector3(this.transform.position.x, 1f, this.transform.position.z), this.transform.rotation);
             DecayAndDestroy();
         }
     }
@@ -62,6 +64,8 @@ public class BomberScript : MonoBehaviour
     protected void DecayAndDestroy()
     {
         GetComponent<Collider>().enabled = false;
+		gui.IncreaseHighScore (100);
+		GetComponent<AudioSource> ().Play ();
         StartCoroutine(ParticlesFor(1.5f));
         StartCoroutine(Sink(2f));
     }

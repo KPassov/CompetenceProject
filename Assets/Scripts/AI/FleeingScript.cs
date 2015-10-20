@@ -8,8 +8,10 @@ public class FleeingScript : MonoBehaviour {
     Vector3 moveDirection;
     NavMeshAgent navAgent;
 	bool playerInvis = false;
+	GUIScript gui;
 
 	void Start () {
+		gui = GameObject.FindGameObjectWithTag ("GUI").GetComponent<GUIScript>();
         navAgent = GetComponent<NavMeshAgent>();
 		player = GameObject.FindGameObjectWithTag("Player");
 		NotificationCenter.DefaultCenter.AddObserver(this, "InvisibilityTriggered");
@@ -72,6 +74,8 @@ public class FleeingScript : MonoBehaviour {
     protected void DecayAndDestroy()
     {
         GetComponent<Collider>().enabled = false;
+		gui.IncreaseHighScore (10);
+		GetComponent<AudioSource> ().Play ();
         StartCoroutine(ParticlesFor(1.5f));
         StartCoroutine(Sink(2f));
     }
