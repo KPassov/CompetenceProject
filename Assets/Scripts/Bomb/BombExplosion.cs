@@ -62,11 +62,12 @@ public class BombExplosion : MonoBehaviour {
 			Debug.Log(rb.gameObject.tag);
 
 			if(rb.gameObject.CompareTag("NPC")){
-				rb.gameObject.GetComponent<GeneralAI>().Action("Kill");
+				//rb.gameObject.GetComponent<AIScript>().;
+				rb.gameObject.SetActive(false);
 			}
 
 			if(rb.gameObject.CompareTag("Player")){
-				rb.gameObject.SetActive(false);
+				//rb.gameObject.SetActive(false);
 			}
 		}
 	}
