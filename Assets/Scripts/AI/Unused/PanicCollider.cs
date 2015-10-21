@@ -15,8 +15,14 @@ public class PanicCollider : MonoBehaviour {
 		transform.position = player.transform.position;
 	}
 	
-	void OnTriggerStay(Collider other) {
-		if (other.gameObject.tag == "NPC")
-			npcDirectorS.NPCCollision (other.gameObject.GetComponent<GeneralAI>(), "VeryClose");
-	}
+    void OnTriggerExit(Collider other)
+    {
+        if(other.gameObject.tag == "NPC")
+            npcDirectorS.NPCCollision(other.gameObject.GetComponent<GeneralAI>(), "CloseExit");
+    }
+
+	void OnTriggerEnter(Collider other) {
+        if (other.gameObject.tag == "NPC")
+            npcDirectorS.NPCCollision(other.gameObject.GetComponent<GeneralAI>(), "CloseEnter");
+    }
 }

@@ -20,6 +20,8 @@ public class BombExplosion : MonoBehaviour {
 
 		Hashtable payload = notif.data;
 
+		Debug.LogWarning ("Explode notif");
+
 		//check if the notification is for us
 		if(payload["explosion"] != this.gameObject)
 			return;
@@ -29,7 +31,8 @@ public class BombExplosion : MonoBehaviour {
 		var pushedGO = Physics.OverlapSphere(transform.position, pushRadius); 
 		var killedGO = Physics.OverlapSphere(transform.position, killRadius);
 		
-		
+		Debug.LogWarning ("Exploded");
+
 		//push all the NPCs in the push radius
 		var pushedRigidbodies = new List<Rigidbody>();
 		foreach (var col in pushedGO)
@@ -59,14 +62,13 @@ public class BombExplosion : MonoBehaviour {
 		foreach (var rb in killedRigidbodies)
 		{
 
-			Debug.Log(rb.gameObject.tag);
-
 			if(rb.gameObject.CompareTag("NPC")){
-				rb.gameObject.GetComponent<GeneralAI>().Action("Kill");
+				//rb.gameObject.GetComponent<AIScript>().;
+				rb.gameObject.SetActive(false);
 			}
 
 			if(rb.gameObject.CompareTag("Player")){
-				rb.gameObject.SetActive(false);
+				//rb.gameObject.SetActive(false);
 			}
 		}
 	}

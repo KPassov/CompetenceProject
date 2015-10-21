@@ -7,35 +7,27 @@ public abstract class GeneralAI : MonoBehaviour {
 	protected GameObject player;
 
 	protected Vector3 moveDirection;
-	protected Vector3 target;
 
 	void Awake () {
     	navAgent = GetComponent<NavMeshAgent>();
         player = GameObject.FindGameObjectWithTag("Player");
-        target = transform.position;
 	}
 	
 	void OnCollisionEnter(Collision col){
 		if (col.gameObject.tag == "Player")
 			Touched ();
 	}
-
-    public void ChangeSpeed(float newSpeed){
-        navAgent.speed = newSpeed;
-    }
-
+    
     public void Action(string state){
+        print(state);
 		switch(state){
-            case"Close":
-                CloseMove();
+            case "CloseEnter":
+				CloseEnter();
                 break;
-            case "VeryClose":
-				VeryCloseMove();
+            case "CloseExit":
+                CloseExit();
                 break;
-            case "Idle":
-                IdleMove();
-                break;
-			case "Kill":
+            case "Kill":
 				Kill ();
 				break;
             default:
@@ -44,22 +36,18 @@ public abstract class GeneralAI : MonoBehaviour {
         }
     }
 
+    abstract protected void CloseEnter();
+    abstract protected void CloseExit();
+    abstract protected void Touched();
+    abstract protected void Kill();
 
-	abstract protected void CloseMove ();
-
-	abstract protected void VeryCloseMove ();
-
-	abstract protected void IdleMove ();
-
-	abstract protected void Touched ();
-
-	abstract protected void Kill();
-
-    protected bool nearTarget(Vector3 target, Vector3 position){
-        return (target - position).magnitude < 1f;
+    protected bool nearTarget(Vector3 target, Vector3 position)
+    {
+        return (target - position).magnitude < 1.5f;
     }
-
+    
 	protected void DecayAndDestroy(){
+        GetComponent<Collider>().enabled = false;
 		StartCoroutine(ParticlesFor(1.5f));
 		StartCoroutine(Sink(2f));
 	}
@@ -72,12 +60,11 @@ public abstract class GeneralAI : MonoBehaviour {
 			parSystem.Stop ();
 		}
 	}
-
+    
 	private IEnumerator Sink(float seconds){
 		float stopTime = Time.time + seconds;
 		tag = "DeadNPC";
 		while (stopTime > Time.time) {
-			print (gameObject.transform.position);
 			gameObject.transform.position = new Vector3(transform.position.x, transform.position.y - 0.01f,transform.position.z);
 			yield return new WaitForEndOfFrame();
 		}

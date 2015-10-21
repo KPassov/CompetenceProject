@@ -4,11 +4,28 @@ using System.Collections;
 public class PlayerControl : MonoBehaviour {
 
     Rigidbody rb;
+	Renderer rend;
     public float thrust = 500f;
     public float maxSpeed = 10f;
 
+	public GameObject grenade;
+	public GameObject explosion;
+
+	Material pacman;
+	Material pacmanBomb;
+
+	public Material mat;
+
 	void Awake () {
         rb = GetComponent<Rigidbody>();	
+		rend = GetComponent<Renderer>();
+		grenade.SetActive(false);
+		explosion.SetActive(false);
+
+		pacman = Resources.Load("Materials/pacman", typeof(Material)) as Material;
+		pacmanBomb = Resources.Load("Materials/pacmanbomb", typeof(Material)) as Material;
+
+		ShowAsBomb (false);
 	}
 	
 	void Update () {
@@ -35,5 +52,28 @@ public class PlayerControl : MonoBehaviour {
         rb.velocity = new Vector3(Mathf.Clamp(rb.velocity.x, -maxSpeed, maxSpeed),
                                   Mathf.Clamp(rb.velocity.y, -maxSpeed, maxSpeed),
                                   Mathf.Clamp(rb.velocity.z, -maxSpeed, maxSpeed));
+	}
+
+	public void ShowAsBomb(bool show){
+		if (show) {
+			grenade.SetActive(true);
+			rend.material = pacmanBomb;
+			StartCoroutine(Explode());
+		} else {
+			grenade.SetActive(false);
+			//explosion.SetActive(false);
+			rend.material = pacman;
+		}
+	}
+
+	IEnumerator Explode(){
+		yield return new WaitForSeconds (3.0f);
+		explosion.SetActive (true);
+		Hashtable payload = new Hashtable();
+		payload["explosion"] = explosion;
+		NotificationCenter.DefaultCenter.PostNotification(this, "Explode",payload);
+		ShowAsBomb (false);
+		yield return new WaitForSeconds (1.0f);
+		explosion.SetActive (false);
 	}
 }

@@ -19,7 +19,7 @@ public class GooPowerUp : GenericPowerUp {
 			if(powerUpActive){
 				Hashtable payload  = new Hashtable();
 				
-				//add bomb to the inventory
+				//add goo to the inventory
 				
 				NotificationCenter.DefaultCenter.PostNotification(this, "GooPickedUp",payload);
 			}
