@@ -70,6 +70,6 @@ public class ScreenFader : MonoBehaviour
 		FadeToBlack();
 		// If the screen is almost black...
 		if (FadeImg.color.a >= 0.95f)
-			Application.LoadLevel(Application.loadedLevel);
+			Application.LoadLevel("GameOver");
 	}
 }   

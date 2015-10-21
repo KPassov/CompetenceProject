@@ -12,15 +12,19 @@ public class GUIScript : MonoBehaviour {
 	int highscore = 0;
 	public ScreenFader screenFader;
 	public bool gameOver = false;
+	private Text gameOverHighScoreText;
+
 	// Use this for initialization
 	void Start () {
 		timeStart = Time.time;
 		screenFader = GameObject.FindGameObjectWithTag ("FadeImg").GetComponent<ScreenFader>();
+//		gameOverHighScoreText = GameObject.FindGameObjectWithTag("HighScore").GetComponent<Text>() as Text;;
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		if(GetTimeLeft() <= 0){
+//			gameOverHighScoreText.text = highscore.ToString();
 			screenFader.EndScene();
 		}else{
 			timeLeftText.text = ((int)GetTimeLeft()).ToString();
