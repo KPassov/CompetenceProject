@@ -7,7 +7,7 @@ public class FleeingScript : MonoBehaviour {
 
     Vector3 moveDirection;
     NavMeshAgent navAgent;
-	bool playerInvis = false;
+	static bool playerInvis = false;
 	GUIScript gui;
 
 	void Start () {
@@ -18,7 +18,7 @@ public class FleeingScript : MonoBehaviour {
 	}
 	
 	void Update () {
-        if ((player.transform.position - transform.position).magnitude < 8f && !playerInvis) {
+		if ((player.transform.position - transform.position).magnitude < 8f && playerInvis != null && !playerInvis) {
             if ((player.transform.position - transform.position).magnitude < 4f)
             {
                 MoveAwayFast();
