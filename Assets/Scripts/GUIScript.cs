@@ -10,15 +10,22 @@ public class GUIScript : MonoBehaviour {
 	public float time = 120f;
 	float timeStart;
 	int highscore = 0;
-
+	public ScreenFader screenFader;
+	public bool gameOver = false;
 	// Use this for initialization
 	void Start () {
 		timeStart = Time.time;
+		screenFader = GameObject.FindGameObjectWithTag ("FadeImg").GetComponent<ScreenFader>();
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		timeLeftText.text = ((int)GetTimeLeft()).ToString();
+		if(GetTimeLeft() <= 0){
+			screenFader.EndScene();
+		}else{
+			timeLeftText.text = ((int)GetTimeLeft()).ToString();
+		}
+
 	}
 
 	float GetTimeLeft(){
