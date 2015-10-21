@@ -62,6 +62,7 @@ public class TerroristBombController : MonoBehaviour {
 		StartCoroutine (DestroyAfter(3.0f));
 
 		NotificationCenter.DefaultCenter.PostNotification(this, "Explode",payload);
+		GameObject.FindGameObjectWithTag ("GUI").GetComponentInChildren<GUIScript> ().IncreaseHighScore (-100);
 	}
 
 	IEnumerator Beep(){

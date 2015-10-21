@@ -18,6 +18,7 @@ public class GUIScript : MonoBehaviour {
 	void Start () {
 		timeStart = Time.time;
 		screenFader = GameObject.FindGameObjectWithTag ("FadeImg").GetComponent<ScreenFader>();
+		NotificationCenter.DefaultCenter.AddObserver(this,"Explode");
 	}
 	
 	// Update is called once per frame
@@ -31,12 +32,24 @@ public class GUIScript : MonoBehaviour {
 
 	}
 
+	void Explode (NotificationCenter.Notification notif ){
+		Debug.Log("GUI Explode");
+	}
+
 	float GetTimeLeft(){
 		return time - (Time.time - timeStart);
 	}
 
 	public void IncreaseHighScore(int score){
 		highscore += score;
+		if (highscore< 0){
+			highscore = 0;
+		}
 		highScoreText.text = highscore.ToString ();
 	}
+
+	void OnDestroy(){
+		NotificationCenter.DefaultCenter.RemoveObserver(this,"Explode");
+	}
 }
+
