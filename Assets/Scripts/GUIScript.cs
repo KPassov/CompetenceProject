@@ -18,14 +18,13 @@ public class GUIScript : MonoBehaviour {
 	void Start () {
 		timeStart = Time.time;
 		screenFader = GameObject.FindGameObjectWithTag ("FadeImg").GetComponent<ScreenFader>();
-//		gameOverHighScoreText = GameObject.FindGameObjectWithTag("HighScore").GetComponent<Text>() as Text;;
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		if(GetTimeLeft() <= 0){
-//			gameOverHighScoreText.text = highscore.ToString();
 			screenFader.EndScene();
+			PlayerPrefs.SetInt("highScore", highscore);
 		}else{
 			timeLeftText.text = ((int)GetTimeLeft()).ToString();
 		}
