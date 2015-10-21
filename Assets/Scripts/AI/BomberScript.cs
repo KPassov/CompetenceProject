@@ -9,7 +9,7 @@ public class BomberScript : MonoBehaviour
     Vector3 moveDirection;
     NavMeshAgent navAgent;
     Vector3 bombSite;
-	bool playerInvis;
+	static bool playerInvis;
 	GUIScript gui;
 
     void Start()
@@ -23,7 +23,7 @@ public class BomberScript : MonoBehaviour
 
     void Update()
     {
-        if ((player.transform.position - transform.position).magnitude < 4f && !playerInvis)
+        if ((player.transform.position - transform.position).magnitude < 4f && playerInvis != null && !playerInvis)
 			MoveAwayFast ();
 		else {
 			if(navAgent.enabled == true)
