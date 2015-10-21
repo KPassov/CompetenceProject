@@ -11,6 +11,8 @@ public class PlayerControl : MonoBehaviour {
 	public GameObject grenade;
 	public GameObject explosion;
 
+	AudioController sfx;
+
 	Material pacman;
 	Material pacmanBomb;
 
@@ -21,6 +23,8 @@ public class PlayerControl : MonoBehaviour {
 		rend = GetComponent<Renderer>();
 		grenade.SetActive(false);
 		explosion.SetActive(false);
+
+		sfx = GameObject.FindGameObjectWithTag ("SFXController").GetComponent<AudioController> ();
 
 		pacman = Resources.Load("Materials/pacman", typeof(Material)) as Material;
 		pacmanBomb = Resources.Load("Materials/pacmanbomb", typeof(Material)) as Material;
@@ -68,6 +72,7 @@ public class PlayerControl : MonoBehaviour {
 
 	IEnumerator Explode(){
 		yield return new WaitForSeconds (3.0f);
+		sfx.playSound ("c4_explode1");
 		explosion.SetActive (true);
 		Hashtable payload = new Hashtable();
 		payload["explosion"] = explosion;
@@ -75,5 +80,6 @@ public class PlayerControl : MonoBehaviour {
 		ShowAsBomb (false);
 		yield return new WaitForSeconds (1.0f);
 		explosion.SetActive (false);
+
 	}
 }
