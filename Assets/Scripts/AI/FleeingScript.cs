@@ -7,7 +7,7 @@ public class FleeingScript : MonoBehaviour {
 
     Vector3 moveDirection;
     NavMeshAgent navAgent;
-	static bool playerInvis = false;
+	static bool playerInvis;
 	GUIScript gui;
 
 	void Start () {
