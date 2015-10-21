@@ -49,7 +49,8 @@ public class PlayerActions : MonoBehaviour {
 	}
 
 	void GooPickedUp(NotificationCenter.Notification notif){
-
+		var inventoryController = gameObject.GetComponent<PlayerInventoryController>();
+		inventoryController.goosInInventory++;
 	}
 
 	IEnumerator SwitchBackMaterial(float afterSeconds){

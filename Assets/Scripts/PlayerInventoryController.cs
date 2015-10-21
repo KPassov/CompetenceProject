@@ -4,6 +4,7 @@ using System.Collections;
 public class PlayerInventoryController : MonoBehaviour {	
 
 	public int bombsInInventory = 0;
+	public int goosInInventory = 0;
 
 	// Use this for initialization
 	void Start () {
